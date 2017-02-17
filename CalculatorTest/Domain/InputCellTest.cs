@@ -1,4 +1,5 @@
-﻿using Calculator.Domain;
+﻿using System;
+using Calculator.Domain;
 using NUnit.Framework;
 
 
@@ -22,7 +23,6 @@ namespace CalculatorTest.Domain
         {
             Assert.IsFalse(InputCell.Symbol("(").IsOperation());
             Assert.IsFalse(InputCell.Symbol(")").IsOperation());
-            Assert.IsFalse(InputCell.Symbol("any").IsOperation());
         }
 
         [Test]
@@ -34,14 +34,13 @@ namespace CalculatorTest.Domain
         [Test]
         public void IsNumberShouldReturnFalse()
         {
-            Assert.IsFalse(InputCell.Symbol("any").IsNumber());
+            Assert.IsFalse(InputCell.Symbol(")").IsNumber());
         }
 
         [Test]
         public void WeightShouldReturnCorrectWeigth()
         {
             Assert.AreEqual(0, InputCell.Number(1).Weight);
-            Assert.AreEqual(0, InputCell.Symbol("any").Weight);
             Assert.AreEqual(1, InputCell.Symbol(")").Weight);
             Assert.AreEqual(1, InputCell.Symbol("(").Weight);
             Assert.AreEqual(2, InputCell.Symbol("+").Weight);
@@ -49,6 +48,14 @@ namespace CalculatorTest.Domain
             Assert.AreEqual(3, InputCell.Symbol("*").Weight);
             Assert.AreEqual(3, InputCell.Symbol("/").Weight);
             Assert.AreEqual(4, InputCell.Symbol("^").Weight);
+        }
+
+        [Test]
+        public void SymbolShouldTrowExceptionInputContainsInvalidSymbols()
+        {
+            Assert.Throws<ArgumentException>(() => InputCell.Symbol("$"));
+            Assert.Throws<ArgumentException>(() => InputCell.Symbol("1"));
+            Assert.Throws<ArgumentException>(() => InputCell.Symbol("a"));
         }
     }
 }

@@ -36,6 +36,9 @@ namespace Calculator.Domain
         /// </summary>
         public static InputCell Symbol(string str)
         {
+            if (!Weights.ContainsKey(str))
+                throw new ArgumentException($"Incorrect element {str}");
+
             return new InputCell(str, Operations.GetValueOrDefault(str));
         }
 
