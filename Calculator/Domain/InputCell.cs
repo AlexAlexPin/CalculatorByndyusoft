@@ -48,7 +48,7 @@ namespace Calculator.Domain
             Expr = expr;
             Value = value;
         }
-
+        
 
         public bool IsOpenBracket()
         {
@@ -95,5 +95,16 @@ namespace Calculator.Domain
                     ["/"] = Expression.Divide,
                     ["^"] = Expression.Power
                 };
+
+
+        public override bool Equals(object obj)
+        {
+            return (obj as InputCell)?.Value?.Equals(Value) ?? false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
+        }
     }
 }
