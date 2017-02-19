@@ -49,5 +49,15 @@ namespace CalculatorTest.Domain
             Assert.AreEqual(-2,  result[3].Value);
             Assert.AreEqual(")", result[4].Value);
         }
+
+        [Test]
+        public void ParseShouldDetectNegativeNumberInFirstCell()
+        {
+            InputCell[] result = new InputParser().Parse(" - 1 + 2 ");
+
+            Assert.AreEqual(-1,  result[0].Value);
+            Assert.AreEqual("+", result[1].Value);
+            Assert.AreEqual(2,   result[2].Value);
+        }
     }
 }

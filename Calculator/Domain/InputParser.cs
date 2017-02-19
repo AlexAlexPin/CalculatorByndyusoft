@@ -17,7 +17,7 @@ namespace Calculator.Domain
         {
             var result = new LinkedList<InputCell>();
             var numberBuffer = new StringBuilder();
-            var numberIsNegative = false;
+            var numberIsNegative = input.TrimStart().FirstOrDefault().IsMinus();
 
             foreach (char ch in input)
             {
