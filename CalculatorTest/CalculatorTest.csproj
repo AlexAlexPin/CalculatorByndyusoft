@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Domain\InputCellTest.cs" />
     <Compile Include="Domain\InputParserTest.cs" />
+    <Compile Include="Domain\InputCheckerTest.cs" />
     <Compile Include="Domain\RpnConverterTest.cs" />
     <Compile Include="Domain\RpnCounterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

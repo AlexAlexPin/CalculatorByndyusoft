@@ -1,5 +1,4 @@
-﻿using System;
-using Calculator.Domain;
+﻿using Calculator.Domain;
 using NUnit.Framework;
 
 
@@ -28,7 +27,7 @@ namespace CalculatorTest.Domain
                 InputCell.Number(2),
             };
             
-            InputCell[] result = new RpnConverter().Convert(input);
+            var result = new RpnConverter(new InputChecker()).Convert(input);
 
             // 3 4 2 * 1 5 - 2 ^ / +
 
@@ -43,36 +42,6 @@ namespace CalculatorTest.Domain
             Assert.AreEqual("^", result[8].Value);
             Assert.AreEqual("/", result[9].Value);
             Assert.AreEqual("+", result[10].Value);
-        }
-
-        [Test]
-        public void ConvertShouldThrowExceptionIfThereAreTwoOpeartionsInRow()
-        {
-            var input = new[]
-            {
-                InputCell.Number(2),
-                InputCell.Symbol("+"),
-                InputCell.Symbol("+"),
-                InputCell.Number(2),
-            };
-
-            Assert.Throws<ArgumentException>(() =>
-                new RpnConverter().Convert(input));
-        }
-
-        [Test]
-        public void ConvertShouldThrowExceptionIfThereIsOpeartionsInLastCell()
-        {
-            var input = new[]
-            {
-                InputCell.Number(2),
-                InputCell.Symbol("+"),
-                InputCell.Number(2),
-                InputCell.Symbol("+")
-            };
-
-            Assert.Throws<ArgumentException>(() =>
-                new RpnConverter().Convert(input));
         }
     }
 }

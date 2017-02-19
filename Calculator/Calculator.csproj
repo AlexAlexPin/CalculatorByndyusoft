@@ -46,6 +46,7 @@
     <Compile Include="Domain\InputParser.cs" />
     <Compile Include="Domain\InputCell.cs" />
     <Compile Include="Domain\RpnCalculator.cs" />
+    <Compile Include="Domain\InputChecker.cs" />
     <Compile Include="Domain\RpnConverter.cs" />
     <Compile Include="Domain\RpnCounter.cs" />
     <Compile Include="Tools\CharExtensions.cs" />

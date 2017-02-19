@@ -9,7 +9,8 @@ namespace Calculator.Application
         static void Main(string[] args)
         {
             var parser     = new InputParser();
-            var converter  = new RpnConverter();
+            var checker    = new InputChecker();
+            var converter  = new RpnConverter(checker);
             var counter    = new RpnCounter();
             var calculator = new RpnCalculator(parser, converter, counter);
 
