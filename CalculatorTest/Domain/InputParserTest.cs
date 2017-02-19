@@ -29,13 +29,25 @@ namespace CalculatorTest.Domain
         }
 
         [Test]
-        public void ParseShouldReturnCorrectResultWithFloatingPoint()
+        public void ParseShouldWorkWithFloatingPoint()
         {
             InputCell[] result = new InputParser().Parse("3.4 + 4");
 
             Assert.AreEqual(3.4, result[0].Value);
             Assert.AreEqual("+", result[1].Value);
             Assert.AreEqual(4,   result[2].Value);
+        }
+
+        [Test]
+        public void ParseShouldWorkWithNegativeNumbers()
+        {
+            InputCell[] result = new InputParser().Parse("1 - (-2)");
+
+            Assert.AreEqual(1,   result[0].Value);
+            Assert.AreEqual("-", result[1].Value);
+            Assert.AreEqual("(", result[2].Value);
+            Assert.AreEqual(-2,  result[3].Value);
+            Assert.AreEqual(")", result[4].Value);
         }
     }
 }

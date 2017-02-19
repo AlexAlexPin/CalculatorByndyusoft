@@ -8,7 +8,7 @@ namespace CalculatorTest.Domain
     public class RpnCounterTest
     {
         [Test]
-        public void CountShouldReturnCorrectResult()
+        public void CountShouldReturn3Dot5()
         {
             // 3 + 4 * 2 / (1 - 5)^2 = 3.5
             // 3 4 2 * 1 5 - 2 ^ / +

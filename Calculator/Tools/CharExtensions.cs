@@ -16,5 +16,10 @@
         {
             return c.Equals('.');
         }
+
+        public static bool IsMinus(this char c)
+        {
+            return c.Equals('-');
+        }
     }
 }

@@ -16,17 +16,17 @@ namespace Calculator.Domain
         {
             var stack = new Stack<InputCell>();
 
-            foreach (var note in input)
+            foreach (var cell in input)
             {
-                if (note.IsNumber())
+                if (cell.IsNumber())
                 {
-                    stack.Push(note);
+                    stack.Push(cell);
                 }
-                else if (note.IsOperation())
+                else if (cell.IsOperation())
                 {
                     var operandRight = GetOperand(stack);
                     var operandLeft  = GetOperand(stack);
-                    var operation    = note.Expr(operandLeft, operandRight);
+                    var operation    = cell.Expr(operandLeft, operandRight);
 
                     var result = InvokeExpession(operation);
 
