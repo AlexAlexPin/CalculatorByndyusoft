@@ -54,6 +54,7 @@
     <Compile Include="Application\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\DictionaryExtensions.cs" />
+    <Compile Include="Tools\CollectionExtensions.cs" />
     <Compile Include="Tools\StackExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -13,7 +13,7 @@ namespace Calculator.Domain
         /// </summary>
         public InputCell[] Parse(string input)
         {
-            var cellBuffer = new LinkedList<InputCell>();
+            var result = new LinkedList<InputCell>();
             var numberBuffer = new NumberBuilder();
 
             foreach (char ch in input)
@@ -25,30 +25,34 @@ namespace Calculator.Domain
                 }
                 else
                 {
-                    SaveNumber(numberBuffer, cellBuffer);
+                    result.AddIfNotNull(CreateCell(numberBuffer));
 
-                    if (ch.IsMinus() && IsMinusForNumber(cellBuffer))
+                    if (ch.IsMinus() && IsMinusForNumber(result))
+                    {
                         numberBuffer.Append(ch);
+                    }
                     else
-                        cellBuffer.AddLast(InputCell.Symbol(ch));
+                    {
+                        result.AddLast(InputCell.Symbol(ch));
+                    }
                 }
             }
-            SaveNumber(numberBuffer, cellBuffer);
-            return cellBuffer.ToArray();
+            result.AddIfNotNull(CreateCell(numberBuffer));
+            return result.ToArray();
         }
-
-        private static void SaveNumber(NumberBuilder numberBuffer, LinkedList<InputCell> cellBuffer)
+        
+        private static bool IsMinusForNumber(IEnumerable<InputCell> cells)
         {
-            if (numberBuffer.IsEmpty()) return;
-            var number = numberBuffer.Build();
-            cellBuffer.AddLast(InputCell.Number(number));
-            numberBuffer.Clear();
-        }
-
-        private static bool IsMinusForNumber(IEnumerable<InputCell> input)
-        {
-            var lastCell = input.LastOrDefault();
+            InputCell lastCell = cells.LastOrDefault();
             return lastCell == null || lastCell.IsOperation() || lastCell.IsOpenBracket();
+        }
+
+        public static InputCell CreateCell(NumberBuilder builder)
+        {
+            if (builder.IsEmpty()) return null;
+            double number = builder.Build();
+            builder.Clear();
+            return InputCell.Number(number);
         }
     }
 }
