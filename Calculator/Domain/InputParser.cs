@@ -13,7 +13,7 @@ namespace Calculator.Domain
         /// </summary>
         public InputCell[] Parse(string input)
         {
-            var result = new LinkedList<InputCell>();
+            var cellBuffer = new LinkedList<InputCell>();
             var numberBuffer = new NumberBuilder();
 
             foreach (char ch in input)
@@ -25,24 +25,24 @@ namespace Calculator.Domain
                 }
                 else
                 {
-                    SaveNumber(numberBuffer, result);
+                    SaveNumber(numberBuffer, cellBuffer);
 
-                    if (ch.IsMinus() && IsMinusForNumber(result))
+                    if (ch.IsMinus() && IsMinusForNumber(cellBuffer))
                         numberBuffer.Append(ch);
                     else
-                        result.AddLast(InputCell.Symbol(ch));
+                        cellBuffer.AddLast(InputCell.Symbol(ch));
                 }
             }
-            SaveNumber(numberBuffer, result);
-            return result.ToArray();
+            SaveNumber(numberBuffer, cellBuffer);
+            return cellBuffer.ToArray();
         }
 
-        private static void SaveNumber(NumberBuilder buffer, LinkedList<InputCell> result)
+        private static void SaveNumber(NumberBuilder numberBuffer, LinkedList<InputCell> cellBuffer)
         {
-            if (buffer.IsEmpty()) return;
-            var number = buffer.Build();
-            result.AddLast(InputCell.Number(number));
-            buffer.Clear();
+            if (numberBuffer.IsEmpty()) return;
+            var number = numberBuffer.Build();
+            cellBuffer.AddLast(InputCell.Number(number));
+            numberBuffer.Clear();
         }
 
         private static bool IsMinusForNumber(IEnumerable<InputCell> input)
