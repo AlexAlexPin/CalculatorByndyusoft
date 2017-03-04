@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Domain\InputParser.cs" />
     <Compile Include="Domain\InputCell.cs" />
+    <Compile Include="Domain\NumberBuilder.cs" />
     <Compile Include="Domain\RpnCalculator.cs" />
     <Compile Include="Domain\InputChecker.cs" />
     <Compile Include="Domain\RpnConverter.cs" />

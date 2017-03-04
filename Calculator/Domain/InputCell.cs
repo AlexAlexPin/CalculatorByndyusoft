@@ -34,6 +34,14 @@ namespace Calculator.Domain
         /// <summary>
         /// Creates an instance of the symbol or arithmetic operation cell.
         /// </summary>
+        public static InputCell Symbol(char ch)
+        {
+            return Symbol(ch.ToString());
+        }
+
+        /// <summary>
+        /// Creates an instance of the symbol or arithmetic operation cell.
+        /// </summary>
         public static InputCell Symbol(string str)
         {
             if (!Weights.ContainsKey(str))

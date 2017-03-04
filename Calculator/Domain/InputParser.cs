@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using Calculator.Tools;
 
 
@@ -16,40 +14,41 @@ namespace Calculator.Domain
         public InputCell[] Parse(string input)
         {
             var result = new LinkedList<InputCell>();
-            var numberBuffer = new StringBuilder();
-            var numberIsNegative = input.TrimStart().FirstOrDefault().IsMinus();
+            var numberBuffer = new NumberBuilder();
 
             foreach (char ch in input)
             {
-                if (ch.IsDigit() || ch.IsDot() || ch.IsMinus() && numberIsNegative)
+                if (ch.IsEmpty()) continue;
+                if (ch.IsDigit() || ch.IsDot())
                 {
                     numberBuffer.Append(ch);
                 }
-                else if (!ch.IsEmpty())
+                else
                 {
                     SaveNumber(numberBuffer, result);
-                    result.AddLast(InputCell.Symbol(ch.ToString()));
-                }
-                if (ch.IsMinus()) // register expression like this 1-(-1)
-                {
-                    numberIsNegative = !numberIsNegative;
+
+                    if (ch.IsMinus() && IsMinusForNumber(result))
+                        numberBuffer.Append(ch);
+                    else
+                        result.AddLast(InputCell.Symbol(ch));
                 }
             }
             SaveNumber(numberBuffer, result);
             return result.ToArray();
         }
 
-
-        private static readonly CultureInfo Culture = new CultureInfo("en-US");
-
-        private static void SaveNumber(StringBuilder numberBuffer, LinkedList<InputCell> result)
+        private static void SaveNumber(NumberBuilder buffer, LinkedList<InputCell> result)
         {
-            if (numberBuffer.Length == 0)
-                return;
-
-            var number = double.Parse(numberBuffer.ToString(), NumberStyles.Number, Culture);
+            if (buffer.IsEmpty()) return;
+            var number = buffer.Build();
             result.AddLast(InputCell.Number(number));
-            numberBuffer.Clear();
+            buffer.Clear();
+        }
+
+        private static bool IsMinusForNumber(IEnumerable<InputCell> input)
+        {
+            var lastCell = input.LastOrDefault();
+            return lastCell == null || lastCell.IsOperation() || lastCell.IsOpenBracket();
         }
     }
 }

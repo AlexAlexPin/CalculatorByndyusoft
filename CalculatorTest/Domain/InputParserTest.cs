@@ -59,5 +59,19 @@ namespace CalculatorTest.Domain
             Assert.AreEqual("+", result[1].Value);
             Assert.AreEqual(2,   result[2].Value);
         }
+
+        [Test]
+        public void ParseShouldWorkWithNegativeNumbersAndBrackets()
+        {
+            InputCell[] result = new InputParser().Parse("1-(2-2)");
+
+            Assert.AreEqual(1,   result[0].Value);
+            Assert.AreEqual("-", result[1].Value);
+            Assert.AreEqual("(", result[2].Value);
+            Assert.AreEqual(2,   result[3].Value);
+            Assert.AreEqual("-", result[4].Value);
+            Assert.AreEqual(2,   result[5].Value);
+            Assert.AreEqual(")", result[6].Value);
+        }
     }
 }
