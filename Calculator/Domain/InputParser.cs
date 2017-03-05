@@ -19,23 +19,22 @@ namespace Calculator.Domain
             foreach (char ch in input)
             {
                 if (ch.IsEmpty()) continue;
+
                 if (ch.IsDigit() || ch.IsDot())
                 {
                     numberBuffer.Append(ch);
+                    continue;
                 }
-                else
-                {
-                    result.AddIfNotNull(CreateCell(numberBuffer));
 
-                    if (ch.IsMinus() && IsMinusForNumber(result))
-                    {
-                        numberBuffer.Append(ch);
-                    }
-                    else
-                    {
-                        result.AddLast(InputCell.Symbol(ch));
-                    }
+                result.AddIfNotNull(CreateCell(numberBuffer));
+
+                if (ch.IsMinus() && IsMinusForNumber(result))
+                {
+                    numberBuffer.Append(ch);
+                    continue;
                 }
+
+                result.AddLast(InputCell.Symbol(ch));
             }
             result.AddIfNotNull(CreateCell(numberBuffer));
             return result.ToArray();
